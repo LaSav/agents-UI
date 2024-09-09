@@ -2,30 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const dummyWorkflows = [
   {
-    id: '1',
+    id: '3795',
     name: 'Project 1',
-    extractionType: 'PDF',
-    tools: [
-      {
-        toolA: 'tool A',
-        toolB: 'tool B',
-        toolC: 'tool C',
-      },
-    ],
+    description: 'workflow for summarizing documents and prioritizing them',
+    workflowStepsLength: '3',
+    createdBy: 'user_368',
   },
   {
-    id: '2',
+    id: '8576',
     name: 'Project 2',
-    extractionType: 'API',
-    tools: [
-      {
-        toolA: 'tool A',
-        toolB: 'tool B',
-        toolC: 'tool C',
-        toolD: 'tool D',
-        toolE: 'tool E',
-      },
-    ],
+    description: 'workflow for summarizing documents and translating them',
+    workflowStepsLength: '3',
+    createdBy: 'user_885',
   },
 ];
 

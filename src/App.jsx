@@ -1,7 +1,9 @@
+import WorkflowsList from './features/workflows/WorkflowsList';
+
 function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <WorkflowsList />
     </>
   );
 }

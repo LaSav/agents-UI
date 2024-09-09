@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchWorkflows } from './workflowApi';
+import { fetchWorkflows } from './workflowsAPI';
 
 const workflowSlice = createSlice({
-  name: 'workflow',
+  name: 'workflows',
   initialState: {
     workflows: [],
     loading: false,
@@ -17,7 +17,7 @@ const workflowSlice = createSlice({
       })
       .addCase(fetchWorkflows.fulfilled, (state, action) => {
         state.loading = false;
-        state.projects = action.payload;
+        state.workflows = action.payload;
       })
       .addCase(fetchWorkflows.rejected, (state, action) => {
         state.loading = false;
