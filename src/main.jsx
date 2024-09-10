@@ -8,17 +8,13 @@ import WorkflowsList from './features/workflows/WorkflowsList';
 import EditWorkflow from './features/workflows/EditWorkflow';
 import ErrorPage from './error-page.jsx';
 import '@radix-ui/themes/styles.css';
-import { Theme, ThemePanel, Container } from '@radix-ui/themes';
+import { Theme } from '@radix-ui/themes';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
     children: [
-      {
-        path: 'workflows/',
-        element: <WorkflowsList />,
-      },
       {
         path: 'workflows/:workflowId',
         element: <EditWorkflow />,
@@ -29,13 +25,10 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Theme>
+    <Theme appearance='dark'>
       <Provider store={store}>
-        <Container>
-          <RouterProvider router={router} />
-        </Container>
+        <RouterProvider router={router} />
       </Provider>
-      <ThemePanel />
     </Theme>
   </StrictMode>
 );

@@ -13,11 +13,7 @@ const WorkflowsList = () => {
   }, [dispatch]);
 
   if (loading) {
-    return (
-      <Flex direction='column' align='center' mt='9'>
-        <Spinner />
-      </Flex>
-    );
+    return <Spinner />;
   }
 
   if (error) {
@@ -27,15 +23,14 @@ const WorkflowsList = () => {
   console.log(workflows);
 
   return (
-    <Flex direction='column' align='center' gap='2'>
-      <h2>Your Workflows</h2>
+    <Flex direction='column' gap='0'>
       {workflows.length === 0 ? (
         <p>No workflows available</p>
       ) : (
         workflows.map((workflow) => (
-          <Box width='400px' key={workflow.id} p='2'>
-            <Card asChild variant='surface' size='3'>
-              <Link to={`${workflow.id}`}>
+          <Box key={workflow.id} pt='2'>
+            <Card asChild variant='surface' size='1'>
+              <Link to={`/workflows/${workflow.id}`}>
                 <Text weight='bold' size='2'>
                   {workflow.name}
                 </Text>
@@ -50,7 +45,6 @@ const WorkflowsList = () => {
           </Box>
         ))
       )}
-      <Button>Press me</Button>
     </Flex>
   );
 };
