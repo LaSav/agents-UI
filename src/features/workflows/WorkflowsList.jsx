@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchWorkflows } from './workflowsAPI';
+import { Flex, Button, Box, Card, Text, Spinner } from '@radix-ui/themes';
+import { Link } from 'react-router-dom';
 
 const WorkflowsList = () => {
   const dispatch = useDispatch();
@@ -11,7 +13,11 @@ const WorkflowsList = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Flex direction='column' align='center' mt='9'>
+        <Spinner />
+      </Flex>
+    );
   }
 
   if (error) {
@@ -21,20 +27,31 @@ const WorkflowsList = () => {
   console.log(workflows);
 
   return (
-    <div>
-      <h2>workflows</h2>
+    <Flex direction='column' align='center' gap='2'>
+      <h2>Your Workflows</h2>
       {workflows.length === 0 ? (
         <p>No workflows available</p>
       ) : (
         workflows.map((workflow) => (
-          <div key={workflow.id}>
-            <h3>{workflow.name}</h3>
-            <p>{workflow.description}</p>
-            <p>Created by:{workflow.createdBy}</p>
-          </div>
+          <Box width='400px' key={workflow.id} p='2'>
+            <Card asChild variant='surface' size='3'>
+              <Link to={`${workflow.id}`}>
+                <Text weight='bold' size='2'>
+                  {workflow.name}
+                </Text>
+                <Text as='div' size='2'>
+                  {workflow.description}
+                </Text>
+                <Text as='div' size='2'>
+                  Created by:{workflow.createdBy}
+                </Text>
+              </Link>
+            </Card>
+          </Box>
         ))
       )}
-    </div>
+      <Button>Press me</Button>
+    </Flex>
   );
 };
 

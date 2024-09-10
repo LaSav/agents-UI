@@ -17,6 +17,13 @@ const dummyWorkflows = [
   },
 ];
 
+const workflow1 = {
+  id: '3759',
+  name: 'Project 1',
+  description: 'workflow for summarizing documents and prioritizing them',
+  createdBy: 'user_368',
+};
+
 export const fetchWorkflows = createAsyncThunk(
   'workflows/fetchWorkflows',
   async () => {
