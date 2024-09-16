@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchWorkflows } from './workflowsAPI';
+import { fetchGenerations } from './generationsAPI';
 import {
   Flex,
   Box,
@@ -10,15 +10,17 @@ import {
   TextField,
   Button,
 } from '@radix-ui/themes';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Link, Outlet } from 'react-router-dom';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
-const WorkflowsList = () => {
+const generationsList = () => {
   const dispatch = useDispatch();
-  const { workflows, loading, error } = useSelector((state) => state.workflows);
+  const { generations, loading, error } = useSelector(
+    (state) => state.generations
+  );
 
   useEffect(() => {
-    dispatch(fetchWorkflows());
+    dispatch(fetchGenerations());
   }, [dispatch]);
 
   if (loading) {
@@ -29,15 +31,13 @@ const WorkflowsList = () => {
     return <p>Error: {error}</p>;
   }
 
-  console.log(workflows);
-
   return (
     <>
-      <Flex p='5' gap='3' justify='between'>
+      <Flex p='5' gap='5'>
         <Flex direction='column' gap='0' maxWidth='300px' minWidth='300px'>
           <Flex justify='between' direction='row' gap='2'>
             <Box maxWidth='250px'>
-              <TextField.Root placeholder='Search Workflows'>
+              <TextField.Root placeholder='Search Generations'>
                 <TextField.Slot>
                   <MagnifyingGlassIcon height='16' width='16' />
                 </TextField.Slot>
@@ -45,21 +45,21 @@ const WorkflowsList = () => {
             </Box>
             <Button>New</Button>
           </Flex>
-          {workflows.length === 0 ? (
-            <Text>No workflows available</Text>
+          {generations.length === 0 ? (
+            <Text>No generations available</Text>
           ) : (
-            workflows.map((workflow) => (
-              <Box key={workflow.id} pt='2'>
+            generations.map((generation) => (
+              <Box key={generation.id} pt='2'>
                 <Card asChild variant='surface' size='1'>
-                  <Link to={`/workflows/${workflow.id}`}>
+                  <Link to={`/generations/${generation.id}`}>
                     <Text weight='bold' size='2'>
-                      {workflow.name}
+                      {generation.name}
                     </Text>
                     <Text as='div' size='2'>
-                      {workflow.description}
+                      {generation.description}
                     </Text>
                     <Text as='div' size='2'>
-                      Created by:{workflow.createdBy}
+                      Created by:{generation.createdBy}
                     </Text>
                   </Link>
                 </Card>
@@ -68,10 +68,9 @@ const WorkflowsList = () => {
           )}
         </Flex>
         <Outlet />
-        {/* this is going to be 2 columns */}
       </Flex>
     </>
   );
 };
 
-export default WorkflowsList;
+export default generationsList;

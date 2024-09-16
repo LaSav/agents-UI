@@ -3,14 +3,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const dummyWorkflows = [
   {
     id: '3795',
-    name: 'Project 1',
+    name: 'Workflow 1',
     description: 'workflow for summarizing documents and prioritizing them',
     workflowStepsLength: '3',
     createdBy: 'user_368',
   },
   {
     id: '8576',
-    name: 'Project 2',
+    name: 'Workflow 2',
     description: 'workflow for summarizing documents and translating them',
     workflowStepsLength: '3',
     createdBy: 'user_885',
@@ -19,7 +19,7 @@ const dummyWorkflows = [
 
 const workflow1 = {
   id: '3759',
-  name: 'Project 1',
+  name: 'Workflow 1',
   description: 'workflow for summarizing documents and prioritizing them',
   createdBy: 'user_368',
 };
