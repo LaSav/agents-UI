@@ -43,7 +43,9 @@ const WorkflowsList = () => {
                 </TextField.Slot>
               </TextField.Root>
             </Box>
-            <Button>New</Button>
+            <Button variant='surface' color='green'>
+              New
+            </Button>
           </Flex>
           {workflows.length === 0 ? (
             <Text>No workflows available</Text>

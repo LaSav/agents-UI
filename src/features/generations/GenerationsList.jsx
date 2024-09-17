@@ -8,7 +8,7 @@ import {
   Text,
   Spinner,
   TextField,
-  Button,
+  Select,
 } from '@radix-ui/themes';
 import { Link, Outlet } from 'react-router-dom';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
@@ -43,7 +43,14 @@ const generationsList = () => {
                 </TextField.Slot>
               </TextField.Root>
             </Box>
-            <Button>New</Button>
+            <Select.Root>
+              <Select.Trigger placeholder='Filter By' />
+              <Select.Content>
+                <Select.Item value='All'>All</Select.Item>
+                <Select.Item value='lastGenerated'>Last Generated</Select.Item>
+                <Select.Item value='createdByUser'>Created by you</Select.Item>
+              </Select.Content>
+            </Select.Root>
           </Flex>
           {generations.length === 0 ? (
             <Text>No generations available</Text>
