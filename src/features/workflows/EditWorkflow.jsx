@@ -20,49 +20,62 @@ import {
 import { useState } from 'react';
 
 const EditWorkflow = () => {
-  const [selectValue, setSelectValue] = useState('PDF');
+  const [selectValue, setSelectValue] = useState('API');
   // Fetch workflow if exists
   // Fetch LLM Tools
 
   return (
     <>
       <Flex direction='column' gap='6' align='center'>
-        <Flex direction='column' gap='4' align='center'>
-          <Box align='center'>
-            <Text as='div' size='3' weight='bold'>
-              Data Input
-            </Text>
-            <Text as='div' size='2' color='gray'>
-              Supply data from an API endpoint, .csv or .pdf files
-            </Text>
-          </Box>
-          <SegmentedControl.Root
-            value={selectValue}
-            onValueChange={setSelectValue}
-            defaultValue='PDF'
-          >
-            <SegmentedControl.Item value='PDF'>PDF</SegmentedControl.Item>
-            <SegmentedControl.Item value='API'>API</SegmentedControl.Item>
-            <SegmentedControl.Item value='CSV'>CSV</SegmentedControl.Item>
-          </SegmentedControl.Root>
-          {selectValue === 'API' ? (
-            <TextField.Root placeholder='Enter API Endpoint'>
-              <TextField.Slot>
-                <LinkNone1Icon height='16' width='16' />
-              </TextField.Slot>
-            </TextField.Root>
-          ) : (
-            <Button variant='surface' color='gray' highContrast>
-              Add {selectValue} File
-            </Button>
-          )}
-        </Flex>
-        <Box width='400px'>
+        <Box width='450px'>
+          <Text size='3' weight='bold'>
+            Data Input
+          </Text>
+          <Card variant='surface'>
+            <Flex direction='row' p='1'>
+              <Flex direction='column' justify='center'>
+                <Text size='2' color='gray'>
+                  Supply data to your workflow from an API endpoint, .csv or
+                  .pdf file
+                </Text>
+              </Flex>
+              <Flex direction='column' gap='4'>
+                <SegmentedControl.Root
+                  value={selectValue}
+                  onValueChange={setSelectValue}
+                  defaultValue='API'
+                >
+                  <SegmentedControl.Item value='PDF'>PDF</SegmentedControl.Item>
+                  <SegmentedControl.Item value='API'>API</SegmentedControl.Item>
+                  <SegmentedControl.Item value='CSV'>CSV</SegmentedControl.Item>
+                </SegmentedControl.Root>
+                {selectValue === 'API' ? (
+                  <TextField.Root placeholder='Enter API Endpoint'>
+                    <TextField.Slot>
+                      <LinkNone1Icon height='16' width='16' />
+                    </TextField.Slot>
+                  </TextField.Root>
+                ) : (
+                  <Button variant='surface' color='gray' highContrast>
+                    Add {selectValue} File
+                  </Button>
+                )}
+                <Flex direction='column' align='end'>
+                  <Text as='div' size='1'>
+                    active
+                  </Text>
+                  <Switch defaultChecked color='green'></Switch>
+                </Flex>
+              </Flex>
+            </Flex>
+          </Card>
+        </Box>
+        <Box width='450px'>
           <Text size='3' weight='bold' highContrast>
             Step 1
           </Text>
           <Card variant='surface'>
-            <Flex direction='row' gap='3' justify='between'>
+            <Flex direction='row' gap='3' justify='between' p='1'>
               <Flex
                 direction='column'
                 maxWidth='250px'
@@ -153,7 +166,7 @@ const EditWorkflow = () => {
               </Flex>
               <Flex direction='column' justify='end'>
                 <Text as='div' size='1'>
-                  Active
+                  active
                 </Text>
                 <Switch defaultChecked color='green'></Switch>
               </Flex>
