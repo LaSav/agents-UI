@@ -1,9 +1,4 @@
-import {
-  LinkNone1Icon,
-  FilePlusIcon,
-  InfoCircledIcon,
-  PlusIcon,
-} from '@radix-ui/react-icons';
+import { LinkNone1Icon, PlusIcon } from '@radix-ui/react-icons';
 import {
   Box,
   Flex,
@@ -13,41 +8,77 @@ import {
   Button,
   IconButton,
   Card,
-  Select,
   Switch,
-  TextArea,
 } from '@radix-ui/themes';
+import WorkflowStep from '../../components/WorkflowStep';
 import { useState } from 'react';
 
 const EditWorkflow = () => {
-  const [selectValue, setSelectValue] = useState('API');
+  const workflow = {
+    name: 'workflow 1',
+    description: 'Summarize and prioritize documents',
+    data: {
+      sourceType: 'PDF_upload',
+      metadata: {
+        uploadedBy: 'user_368',
+        uploadDate: '2024-09-17',
+        size: '2MB',
+      },
+    },
+    workflowSteps: [
+      {
+        stepId: '1',
+        tool: 'textSummarization',
+        inputType: 'PDF',
+        outputType: 'text',
+        description: 'summarizes data from ACME_contracts_2024.pdf',
+        parameters: 'summarise in 500 words',
+        active: true,
+      },
+      {
+        stepId: '2',
+        tool: 'documentClassification',
+        inputType: 'text',
+        outputType: 'PDF',
+        active: true,
+        description:
+          'Classifies summaries from step 1 by construction contracts only. Final step, generate to PDF.',
+        parameters: {
+          classifications: 'construction',
+          keywords: 'ACME',
+        },
+      },
+    ],
+  };
+
+  const [selectValue, setSelectValue] = useState(workflow.sourceType);
   // Fetch workflow if exists
   // Fetch LLM Tools
 
+  console.log(workflow);
+
   return (
     <>
-      <Flex direction='column' gap='6' align='center'>
-        <Box width='450px'>
-          <Text size='3' weight='bold'>
+      <Flex direction='column' gap='4' align='center'>
+        <Box width='500px'>
+          <Text size='3' weight='bold' highContrast>
             Data Input
           </Text>
           <Card variant='surface'>
-            <Flex direction='row' p='1'>
-              <Flex direction='column' justify='center'>
-                <Text size='2' color='gray'>
-                  Supply data to your workflow from an API endpoint, .csv or
-                  .pdf file
-                </Text>
-              </Flex>
-              <Flex direction='column' gap='4'>
+            <Flex direction='row' p='1' gap='4'>
+              <Flex direction='column' width='250px' gap='3'>
                 <SegmentedControl.Root
                   value={selectValue}
                   onValueChange={setSelectValue}
-                  defaultValue='API'
+                  defaultValue={workflow.data.sourceType || 'API'}
                 >
-                  <SegmentedControl.Item value='PDF'>PDF</SegmentedControl.Item>
+                  <SegmentedControl.Item value='PDF_upload'>
+                    PDF
+                  </SegmentedControl.Item>
                   <SegmentedControl.Item value='API'>API</SegmentedControl.Item>
-                  <SegmentedControl.Item value='CSV'>CSV</SegmentedControl.Item>
+                  <SegmentedControl.Item value='CSV_upload'>
+                    CSV
+                  </SegmentedControl.Item>
                 </SegmentedControl.Root>
                 {selectValue === 'API' ? (
                   <TextField.Root placeholder='Enter API Endpoint'>
@@ -60,6 +91,12 @@ const EditWorkflow = () => {
                     Add {selectValue} File
                   </Button>
                 )}
+              </Flex>
+              <Flex direction='column' width='200px' gap='2' justify='end'>
+                <Text size='2' color='gray'>
+                  Supply data to your workflow from an API endpoint, .csv or
+                  .pdf file
+                </Text>
                 <Flex direction='column' align='end'>
                   <Text as='div' size='1'>
                     active
@@ -70,109 +107,18 @@ const EditWorkflow = () => {
             </Flex>
           </Card>
         </Box>
-        <Box width='450px'>
-          <Text size='3' weight='bold' highContrast>
-            Step 1
-          </Text>
-          <Card variant='surface'>
-            <Flex direction='row' gap='3' justify='between' p='1'>
-              <Flex
-                direction='column'
-                maxWidth='250px'
-                minWidth='250px'
-                gap='3'
-              >
-                <TextField.Root
-                  placeholder='Step Name'
-                  size='1'
-                ></TextField.Root>
-                <Select.Root size='1'>
-                  <Select.Trigger placeholder='Pick a Tool' />
-                  <Select.Content>
-                    <Select.Group>
-                      <Select.Label>Text Processing</Select.Label>
-                      <Select.Item value='textSummarization'>
-                        text summarization
-                      </Select.Item>
-                      <Select.Item value='textGeneration'>
-                        text generation
-                      </Select.Item>
-                      <Select.Item value='sentimentAnalysis'>
-                        sentiment analysis
-                      </Select.Item>
-                      <Select.Item value='NER'>
-                        Named Entity Recognition
-                      </Select.Item>
-                      <Select.Item value='translation'>translation</Select.Item>
-                      <Select.Item value='moderation'>moderation</Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                      <Select.Label>
-                        Data Extraction and Understanding
-                      </Select.Label>
-                      <Select.Item value='documentClassification'>
-                        document classification
-                      </Select.Item>
-                      <Select.Item value='NER'>
-                        Named Entity Recognition
-                      </Select.Item>
-                      <Select.Item value='documentSearchAndRetrieval'>
-                        document search and retrieval
-                      </Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                      <Select.Label>
-                        Interaction and Customer Support
-                      </Select.Label>
-                      <Select.Item value='questionAnswering'>
-                        question answering
-                      </Select.Item>
-                      <Select.Item value='sentimentAnalysis'>
-                        sentiment analysis
-                      </Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                      <Select.Label>Developer and Automation</Select.Label>
-                      <Select.Item value='codeGeneration'>
-                        code generation
-                      </Select.Item>
-                      <Select.Item value='codeTextGeneration'>
-                        text generation (for code)
-                      </Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                      <Select.Label>Industry Specific</Select.Label>
-                      <Select.Item value='legalDocumentClassification'>
-                        legal document classification
-                      </Select.Item>
-                      <Select.Item value='mediaTextSummarization'>
-                        media text summarization
-                      </Select.Item>
-                      <Select.Item value='healthcareNER'>
-                        healthcare Named Entity Recognition
-                      </Select.Item>
-                    </Select.Group>
-                  </Select.Content>
-                </Select.Root>
-                <TextArea
-                  size='1'
-                  resize='vertical'
-                  placeholder='Enter a description'
-                />
-              </Flex>
-              <Flex direction='column' justify='end'>
-                <Text as='div' size='1'>
-                  active
-                </Text>
-                <Switch defaultChecked color='green'></Switch>
-              </Flex>
-            </Flex>
-          </Card>
-        </Box>
+        {workflow.workflowSteps.map((step) => (
+          <WorkflowStep
+            key={step.stepId}
+            stepId={step.stepId}
+            tool={step.tool}
+            inputType={step.inputType}
+            outputType={step.outputType}
+            description={step.description}
+            active={step.active}
+            parameters={step.parameters}
+          />
+        ))}
         <Box>
           <IconButton radius='full' color='purple' variant='surface'>
             <PlusIcon></PlusIcon>
@@ -187,3 +133,12 @@ const EditWorkflow = () => {
 };
 
 export default EditWorkflow;
+
+// Todo:
+//      - flag 'reading from document' when working from existing workflow
+//      - maxHeight on steps
+//      - refactor data input & step cards into seperate components
+
+// Optimizations/ edge cases:
+//      - React Memoization to only re-render the WorkflowStep when its props
+//        are changed

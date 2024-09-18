@@ -12,6 +12,9 @@ export default function Root() {
         <TabNav.Link asChild active={pathname === '/generations'}>
           <NavLink to='/generations'>Generations</NavLink>
         </TabNav.Link>
+        <TabNav.Link asChild active={pathname === '/history'}>
+          <NavLink to='/generations'>History</NavLink>
+        </TabNav.Link>
       </TabNav.Root>
       <Outlet />
     </>
