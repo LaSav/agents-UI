@@ -1,4 +1,10 @@
-import { LinkNone1Icon, PlusIcon } from '@radix-ui/react-icons';
+import {
+  LinkNone1Icon,
+  PlusIcon,
+  PersonIcon,
+  Share1Icon,
+  GearIcon,
+} from '@radix-ui/react-icons';
 import {
   Box,
   Flex,
@@ -9,6 +15,7 @@ import {
   IconButton,
   Card,
   Switch,
+  Separator,
 } from '@radix-ui/themes';
 import WorkflowStep from '../../components/WorkflowStep';
 import { useState } from 'react';
@@ -18,6 +25,7 @@ const EditWorkflow = () => {
   const initialWorkflow = {
     name: 'workflow 1',
     description: 'Summarize and prioritize documents',
+    assignedUser: 'user_368',
     data: {
       sourceType: 'PDF_upload',
       metadata: {
@@ -34,6 +42,7 @@ const EditWorkflow = () => {
         outputType: 'text',
         description: 'summarizes data from ACME_contracts_2024.pdf',
         parameters: 'summarise in 500 words',
+        assignedUser: 'user_368',
         active: true,
       },
       {
@@ -44,6 +53,7 @@ const EditWorkflow = () => {
         description:
           'Classifies summaries from step 1 by construction contracts only. Final step, generate to PDF.',
         parameters: 'construction',
+        assignedUser: 'user_599',
         active: true,
       },
     ],
@@ -131,6 +141,7 @@ const EditWorkflow = () => {
             description={step.description}
             active={step.active}
             parameters={step.parameters}
+            assignedUser={step.assignedUser}
           />
         ))}
         <Box>
@@ -144,8 +155,38 @@ const EditWorkflow = () => {
           </IconButton>
         </Box>
       </Flex>
-      <Flex direction='column' height='100vh' position='sticky' top='4'>
-        <h3>Workflow Settings</h3>
+      <Flex
+        direction='column'
+        height='80vh'
+        position='sticky'
+        maxWidth='300px'
+        minWidth='300px'
+        top='4'
+        align='center'
+        gap='4'
+      >
+        <Flex direction='column' align='center' p='2' width='150px'>
+          <PersonIcon height='20' width='20' />
+          <Text size='2'>Maintained by:</Text>
+          <Text size='2'>{initialWorkflow.assignedUser}</Text>
+        </Flex>
+        <Separator orientation='horizontal' size='4' />
+        {/* <Flex direction='column' align='center' p='2' width='150px'>
+          <Text size='2'>Contributors:</Text>
+          {workflowSteps.map((step) => (
+            <Text size='2'>{step.assignedUser}</Text>
+          ))}
+        </Flex> */}
+        <Flex direction='row' gap='2'>
+          <Button variant='surface' color='sky'>
+            <Share1Icon />
+            Fork
+          </Button>
+          <Button variant='surface' color='purple'>
+            <GearIcon />
+            Generate
+          </Button>
+        </Flex>
       </Flex>
     </>
   );
@@ -156,7 +197,8 @@ export default EditWorkflow;
 // Todo:
 //      - flag 'reading from document' when working from existing workflow
 //      - maxHeight on steps
-//      - refactor data input & step cards into seperate components
+//      - refactor data input into seperate components
+//      - Add remove step option
 
 // Optimizations/ edge cases:
 //      - React Memoization to only re-render the WorkflowStep when its props

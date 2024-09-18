@@ -12,20 +12,6 @@ import ErrorPage from './error-page.jsx';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <Root />,
-//     children: [
-//       {
-//         path: 'workflows/:workflowId',
-//         element: <EditWorkflow />,
-//       },
-//     ],
-//     errorElement: <ErrorPage />,
-//   },
-// ]);
-
 const router = createBrowserRouter([
   {
     path: '/',

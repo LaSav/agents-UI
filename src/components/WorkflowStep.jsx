@@ -18,6 +18,7 @@ const WorkflowStep = ({
   description,
   active,
   parameters,
+  assignedUser,
 }) => {
   const [selectedTool, setSelectedTool] = useState(tool);
 
@@ -168,11 +169,14 @@ const WorkflowStep = ({
                 defaultValue={description ? description : ''}
               />
             </Flex>
-            <Flex direction='column' justify='end'>
-              <Text as='div' size='1'>
-                active
-              </Text>
-              <Switch defaultChecked color='green'></Switch>
+            <Flex direction='column' justify='between'>
+              <Text size='1'>{assignedUser}</Text>
+              <Flex direction='column' align='end'>
+                <Text as='div' size='1'>
+                  active
+                </Text>
+                <Switch defaultChecked color='green'></Switch>
+              </Flex>
             </Flex>
           </Flex>
         </Card>
