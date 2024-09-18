@@ -14,7 +14,8 @@ import WorkflowStep from '../../components/WorkflowStep';
 import { useState } from 'react';
 
 const EditWorkflow = () => {
-  const workflow = {
+  // Fetch workflow
+  const initialWorkflow = {
     name: 'workflow 1',
     description: 'Summarize and prioritize documents',
     data: {
@@ -40,26 +41,39 @@ const EditWorkflow = () => {
         tool: 'documentClassification',
         inputType: 'text',
         outputType: 'PDF',
-        active: true,
         description:
           'Classifies summaries from step 1 by construction contracts only. Final step, generate to PDF.',
-        parameters: {
-          classifications: 'construction',
-          keywords: 'ACME',
-        },
+        parameters: 'construction',
+        active: true,
       },
     ],
   };
 
-  const [selectValue, setSelectValue] = useState(workflow.sourceType);
-  // Fetch workflow if exists
-  // Fetch LLM Tools
+  const [selectValue, setSelectValue] = useState('API'); // This needs to be dynamic
 
-  console.log(workflow);
+  const [workflowSteps, setWorkflowSteps] = useState(
+    initialWorkflow.workflowSteps
+  );
+
+  // On Saving workflow I need to submit a put request with the workflow data object. Which means I have to include the useState workflowSteps.
+
+  const addNewStep = () => {
+    const newStep = {
+      stepId: (workflowSteps.length + 1).toString(),
+      tool: '',
+      inputType: '',
+      outputType: '',
+      description: '',
+      active: true,
+    };
+
+    setWorkflowSteps([...workflowSteps, newStep]);
+  };
 
   return (
     <>
-      <Flex direction='column' gap='4' align='center'>
+      <Flex direction='column' gap='4' align='center' overflowY='auto'>
+        {/* refactor this into seperate component */}
         <Box width='500px'>
           <Text size='3' weight='bold' highContrast>
             Data Input
@@ -70,7 +84,7 @@ const EditWorkflow = () => {
                 <SegmentedControl.Root
                   value={selectValue}
                   onValueChange={setSelectValue}
-                  defaultValue={workflow.data.sourceType || 'API'}
+                  defaultValue='API'
                 >
                   <SegmentedControl.Item value='PDF_upload'>
                     PDF
@@ -107,7 +121,7 @@ const EditWorkflow = () => {
             </Flex>
           </Card>
         </Box>
-        {workflow.workflowSteps.map((step) => (
+        {workflowSteps.map((step) => (
           <WorkflowStep
             key={step.stepId}
             stepId={step.stepId}
@@ -120,12 +134,17 @@ const EditWorkflow = () => {
           />
         ))}
         <Box>
-          <IconButton radius='full' color='purple' variant='surface'>
+          <IconButton
+            radius='full'
+            color='purple'
+            variant='surface'
+            onClick={addNewStep}
+          >
             <PlusIcon></PlusIcon>
           </IconButton>
         </Box>
       </Flex>
-      <Flex direction='column'>
+      <Flex direction='column' height='100vh' position='sticky' top='4'>
         <h3>Workflow Settings</h3>
       </Flex>
     </>

@@ -34,7 +34,15 @@ const WorkflowsList = () => {
   return (
     <>
       <Flex p='5' gap='3' justify='between'>
-        <Flex direction='column' gap='0' maxWidth='300px' minWidth='300px'>
+        <Flex
+          direction='column'
+          gap='0'
+          maxWidth='300px'
+          minWidth='300px'
+          height='100vh'
+          top='4'
+          position='sticky'
+        >
           <Flex justify='between' direction='row' gap='2'>
             <Box maxWidth='250px'>
               <TextField.Root placeholder='Search Workflows'>

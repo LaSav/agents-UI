@@ -21,12 +21,18 @@ const WorkflowStep = ({
 }) => {
   const [selectedTool, setSelectedTool] = useState(tool);
 
+  console.log(tool);
+
   const renderToolParameters = () => {
     switch (selectedTool) {
       case 'documentClassification':
         return (
           <>
-            <TextField.Root placeholder='Enter Classifications' size='1' />
+            <TextField.Root
+              placeholder='Enter Classifications'
+              size='1'
+              defaultValue={parameters ? parameters : ''}
+            />
           </>
         );
       case 'translation':
@@ -52,6 +58,7 @@ const WorkflowStep = ({
               size='1'
               resize='vertical'
               placeholder='Enter summarization instructions'
+              defaultValue={parameters ? parameters : ''}
             />
           </>
         );
@@ -79,6 +86,7 @@ const WorkflowStep = ({
             <Flex direction='column' maxWidth='250px' minWidth='250px' gap='3'>
               <Select.Root
                 size='1'
+                value={selectedTool}
                 onValueChange={(value) => setSelectedTool(value)}
               >
                 <Select.Trigger placeholder='Select Tool' />
@@ -157,9 +165,8 @@ const WorkflowStep = ({
                 size='1'
                 resize='vertical'
                 placeholder='Enter a description for this step'
-              >
-                {description ? description : ''}
-              </TextArea>
+                defaultValue={description ? description : ''}
+              />
             </Flex>
             <Flex direction='column' justify='end'>
               <Text as='div' size='1'>
